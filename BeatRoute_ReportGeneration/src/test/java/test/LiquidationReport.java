@@ -21,10 +21,10 @@ public class LiquidationReport {
 		 // 🔹 Set custom download path before launching browser
 		
 
-//        String downloadFilepath1 = System.getProperty("user.dir") + "/Reports";
+//        String downloadFilepath1 = System.getProperty("user.dir") + "\\Reports";
         
         String today1 = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String downloadFilepath1 = System.getProperty("user.dir") + "/Reports"+today1;
+        String downloadFilepath1 = System.getProperty("user.dir") + "\\Reports"+today1;
 
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("download.default_directory", downloadFilepath1);
@@ -75,21 +75,67 @@ public class LiquidationReport {
 		Thread.sleep(Duration.ofSeconds(4));
 		
 		LocalDate today = LocalDate.now();
+		
         LocalDate yesterday = today.minusDays(1);
+        
+        LocalDate firstDayOfMonth = today.withDayOfMonth(1);
         System.out.println("Today: " + today);
         System.out.println("Yesterday: " + yesterday);
         
         int day=yesterday.getDayOfMonth();
-        
-        WebElement yesterdays = driver.findElement(By.xpath("//div[text()=' "+day+" ']"));
-        yesterdays.click();
+       
+        if (today.isEqual(firstDayOfMonth)) {
+            // Click the "previous month" button
+            WebElement previousMonthBtn = driver.findElement(By.xpath(
+                "//button[@class='mat-calendar-previous-button mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base']"
+            ));
+            previousMonthBtn.click();
+
+            // Small wait to allow calendar to load previous month
+            Thread.sleep(1000);
+
+            // Re-locate yesterday’s day in the *previous month’s calendar*
+            
+            WebElement yesterdays = driver.findElement(By.xpath("//div[text()=' " + day + " ']"));
+            yesterdays.click();
+
+        } else {
+            // Same month → just click yesterday’s date
+           
+            WebElement yesterdays = driver.findElement(By.xpath("//div[text()=' " + day + " ']"));
+            yesterdays.click();
+        }
         
         WebElement toDate=driver.findElement(By.xpath("//input[@value='toDate']"));
         toDate.click();
         
-        WebElement yesterday1 = driver.findElement(By.xpath("//div[text()=' "+day+" ']"));
-        yesterday1.click();
+        Thread.sleep(Duration.ofSeconds(4));
         
+//        WebElement yesterday1 = driver.findElement(By.xpath("//div[text()=' "+day+" ']"));
+//        yesterday1.click();
+        
+        if (today.isEqual(firstDayOfMonth)) {
+            // Click the "previous month" button
+            WebElement previousMonthBtn = driver.findElement(By.xpath(
+                "//button[@class='mat-calendar-previous-button mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base']"
+            ));
+            previousMonthBtn.click();
+
+            // Small wait to allow calendar to load previous month
+            Thread.sleep(1000);
+
+            // Re-locate yesterday’s day in the *previous month’s calendar*
+            
+            WebElement yesterdays1 = driver.findElement(By.xpath("//div[text()=' " + day + " ']"));
+            yesterdays1.click();
+
+        } else {
+            // Same month → just click yesterday’s date
+           
+            WebElement yesterdays1 = driver.findElement(By.xpath("//div[text()=' " + day + " ']"));
+            yesterdays1.click();
+        }
+//        
         WebElement applyButton=driver.findElement(By.xpath("//button[text()='Apply ']"));
         applyButton.click();
         
@@ -105,7 +151,10 @@ public class LiquidationReport {
         WebElement downloadButton=driver.findElement(By.xpath("//button[text()='Download ']"));
         downloadButton.click();
         
+        WebElement logout=driver.findElement(By.xpath("//mat-icon[text()='logout']"));
+        logout.click();
         
+        driver.quit();
         
         
         
