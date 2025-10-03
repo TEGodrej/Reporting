@@ -13,7 +13,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.Test;
 
-public class LiquidationReport {
+public class LiquidationReportTest {
 
 	
 	@Test
@@ -24,7 +24,7 @@ public class LiquidationReport {
 //        String downloadFilepath1 = System.getProperty("user.dir") + "\\Reports";
         
         String today1 = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String downloadFilepath1 = System.getProperty("user.dir") + "\\Reports"+today1;
+        String downloadFilepath1 = System.getProperty("user.dir") + "\\Reports";
 
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("download.default_directory", downloadFilepath1);
@@ -136,21 +136,26 @@ public class LiquidationReport {
             yesterdays1.click();
         }
 //        
+        Thread.sleep(Duration.ofSeconds(4));
         WebElement applyButton=driver.findElement(By.xpath("//button[text()='Apply ']"));
         applyButton.click();
         
+        Thread.sleep(Duration.ofSeconds(2));
         WebElement downloadTab=driver.findElement(By.xpath("//i[@class='fa fa-download scASFIconStyle scCMCenterXY']"));
         downloadTab.click();
         
 //        WebElement overAllLiquidation=driver.findElement(By.xpath("//div[@class='scASFDropdownListItems']/child::span[text()='Overall liquidation']"));
 //        overAllLiquidation.click();   //div[@class='scASFDropdownListItems']/child::span[text()='Liquidation log']
         
+        Thread.sleep(Duration.ofSeconds(2));
         WebElement liquidationLog=driver.findElement(By.xpath("//div[@class='scASFDropdownListItems']/child::span[text()='Liquidation log']"));
         liquidationLog.click();
         
+        Thread.sleep(Duration.ofSeconds(2));
         WebElement downloadButton=driver.findElement(By.xpath("//button[text()='Download ']"));
         downloadButton.click();
         
+//        Thread.sleep(Duration.ofSeconds(2));
         WebElement logout=driver.findElement(By.xpath("//mat-icon[text()='logout']"));
         logout.click();
         

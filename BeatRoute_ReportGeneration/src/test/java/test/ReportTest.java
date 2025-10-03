@@ -16,7 +16,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.Test;
 
-public class Report {
+public class ReportTest {
 
     @Test
     public void reportGeneration() throws InterruptedException {

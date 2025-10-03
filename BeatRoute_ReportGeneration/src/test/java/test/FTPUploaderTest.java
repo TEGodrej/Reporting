@@ -11,13 +11,13 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.testng.annotations.Test;
 
-public class FTPUploader {
+public class FTPUploaderTest {
 	
     @Test
     public void upload(){
         // Local folder where reports are stored
     	String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-    	String localFolder = "C:\\Users\\testing.engineer\\git\\Reporting\\BeatRoute_ReportGeneration\\Reports" + today;
+    	String localFolder = "C:\\Users\\testing.engineer\\git\\Reporting\\BeatRoute_ReportGeneration\\Reports" ;
         // Get all files starting with "Liquidation_Log" and ending with ".xlsx"
         File folder = new File(localFolder);
         File[] files = folder.listFiles((dir, name) -> name.startsWith("Liquidation_Log") && name.endsWith(".xlsx"));
