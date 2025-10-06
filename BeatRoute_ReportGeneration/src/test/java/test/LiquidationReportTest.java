@@ -2,7 +2,6 @@ package test;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +22,7 @@ public class LiquidationReportTest {
 
 //        String downloadFilepath1 = System.getProperty("user.dir") + "\\Reports";
         
-        String today1 = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//        String today1 = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String downloadFilepath1 = System.getProperty("user.dir") + "\\Reports";
 
         Map<String, Object> prefs = new HashMap<>();
@@ -55,12 +54,12 @@ public class LiquidationReportTest {
 		WebElement loginButton=driver.findElement(By.xpath("//button[@type='submit']"));
 		loginButton.click();
 		
-		Thread.sleep(Duration.ofSeconds(4));
+		Thread.sleep(Duration.ofSeconds(2));
 		
 		WebElement scanTab=driver.findElement(By.xpath("//mat-label[text()='Scan']"));
 		scanTab.click();
 		
-		Thread.sleep(Duration.ofSeconds(4));
+		Thread.sleep(Duration.ofSeconds(2));
 		WebElement liquidatonTab=driver.findElement(By.xpath("//mat-label[text()='Liquidation']"));
 		liquidatonTab.click();
 		
@@ -136,7 +135,7 @@ public class LiquidationReportTest {
             yesterdays1.click();
         }
 //        
-        Thread.sleep(Duration.ofSeconds(4));
+        Thread.sleep(Duration.ofSeconds(2));
         WebElement applyButton=driver.findElement(By.xpath("//button[text()='Apply ']"));
         applyButton.click();
         
@@ -155,7 +154,7 @@ public class LiquidationReportTest {
         WebElement downloadButton=driver.findElement(By.xpath("//button[text()='Download ']"));
         downloadButton.click();
         
-//        Thread.sleep(Duration.ofSeconds(2));
+        Thread.sleep(Duration.ofSeconds(7));
         WebElement logout=driver.findElement(By.xpath("//mat-icon[text()='logout']"));
         logout.click();
         

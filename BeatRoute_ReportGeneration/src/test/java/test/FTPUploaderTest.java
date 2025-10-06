@@ -2,8 +2,6 @@ package test;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -16,7 +14,7 @@ public class FTPUploaderTest {
     @Test
     public void upload(){
         // Local folder where reports are stored
-    	String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//    	String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     	String localFolder = "C:\\Users\\testing.engineer\\git\\Reporting\\BeatRoute_ReportGeneration\\Reports" ;
         // Get all files starting with "Liquidation_Log" and ending with ".xlsx"
         File folder = new File(localFolder);
