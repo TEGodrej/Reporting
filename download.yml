@@ -1,9 +1,9 @@
 name: Scheduled Download
 
-on:
-  schedule:
-    - cron: "0 9 * * *"   # Every day at 9:00 UTC
-  workflow_dispatch:       # Also allow manual trigger
+# on:
+#   schedule:
+#     - cron: "0 9 * * *"   # Every day at 9:00 UTC
+#   workflow_dispatch:       # Also allow manual trigger
 
 jobs:
   download:
