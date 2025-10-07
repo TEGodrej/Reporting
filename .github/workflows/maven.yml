@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout the repository
+      # 1️⃣ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -35,18 +35,15 @@ jobs:
 
       # 3️⃣ Install Google Chrome
       - name: Install Google Chrome
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
+        run: sudo apt-get update && sudo apt-get install -y google-chrome-stable
 
-     # 4️⃣ Install ChromeDriver manually
+      # 4️⃣ Setup ChromeDriver (official action)
       - name: Setup ChromeDriver
-        uses: nanasess/setup-chromedriver@v2
+        uses: actions/setup-chromedriver@v4
         with:
           version: latest
 
-
-      # 5️⃣ Verify environment
+      # 5️⃣ Verify environment (optional)
       - name: Verify Java, Maven, Chrome
         run: |
           java -version
@@ -56,16 +53,26 @@ jobs:
 
       # 6️⃣ Build Maven project
       - name: Build with Maven
-        run: mvn -B clean compile --file pom.xml
+        run: mvn -B clean compile
         working-directory: BeatRoute_ReportGeneration
 
       # 7️⃣ Run TestNG tests
       - name: Run Maven tests
-        run: mvn -B test --file pom.xml
+        run: mvn -B test
         working-directory: BeatRoute_ReportGeneration
 
-      # 8️⃣ Optional: Update dependency graph for Dependabot
-      - name: Update dependency graph
-        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+      # 8️⃣ Upload Reports as artifacts (optional)
+      - name: Upload Report artifacts
+        uses: actions/upload-artifact@v3
         with:
-          working-directory: BeatRoute_ReportGeneration
+          name: Test-Reports
+          path: BeatRoute_ReportGeneration/Reports/
+
+      # 9️⃣ FTP upload (example)
+      - name: Upload reports to FTP
+        run: |
+          sudo apt-get install -y lftp
+          lftp -c "
+            open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_HOST }};
+            mirror -R BeatRoute_ReportGeneration/Reports /remote/Reports
+          "
