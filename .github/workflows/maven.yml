@@ -21,11 +21,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Set up JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -33,44 +31,35 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      # 3️⃣ Install Google Chrome
       - name: Install Google Chrome
         run: sudo apt-get update && sudo apt-get install -y google-chrome-stable
 
-      # 4️⃣ Setup ChromeDriver (official action)
       - name: Setup ChromeDriver
         uses: nanasess/setup-chromedriver@v2
         with:
-         version: latest
+          version: latest
 
-
-      # 5️⃣ Verify environment (optional)
-      - name: Verify Java, Maven, Chrome
+      - name: Verify environment
         run: |
           java -version
           mvn -version
           google-chrome --version
           chromedriver --version
 
-      # 6️⃣ Build Maven project
       - name: Build with Maven
         run: mvn -B clean compile
         working-directory: BeatRoute_ReportGeneration
 
-      # 7️⃣ Run TestNG tests
       - name: Run Maven tests
         run: mvn -B test
         working-directory: BeatRoute_ReportGeneration
 
-      # 8️⃣ Upload Reports as artifacts (optional)
       - name: Upload Report artifacts
         uses: actions/upload-artifact@v4
         with:
-         name: Test-Reports
-         path: BeatRoute_ReportGeneration/Reports/
+          name: Test-Reports
+          path: BeatRoute_ReportGeneration/Reports/
 
-
-      # 9️⃣ FTP upload (example)
       - name: Upload reports to FTP
         run: |
           sudo apt-get install -y lftp
