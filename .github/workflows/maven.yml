@@ -39,9 +39,10 @@ jobs:
 
       # 4️⃣ Setup ChromeDriver (official action)
       - name: Setup ChromeDriver
-        uses: actions/setup-chromedriver@v4
+        uses: nanasess/setup-chromedriver@v2
         with:
-          version: latest
+         version: latest
+
 
       # 5️⃣ Verify environment (optional)
       - name: Verify Java, Maven, Chrome
@@ -63,10 +64,11 @@ jobs:
 
       # 8️⃣ Upload Reports as artifacts (optional)
       - name: Upload Report artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: Test-Reports
-          path: BeatRoute_ReportGeneration/Reports/
+         name: Test-Reports
+         path: BeatRoute_ReportGeneration/Reports/
+
 
       # 9️⃣ FTP upload (example)
       - name: Upload reports to FTP
