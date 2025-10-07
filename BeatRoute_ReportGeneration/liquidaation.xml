@@ -3,6 +3,7 @@
   <test thread-count="2" name="Test">
     <classes>
       <class name="test.LiquidationReport"/>
+      <class name="test.upload"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

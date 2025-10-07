@@ -2,60 +2,54 @@ package GenericUtility;
 
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
+import ObjectRepository.DashBoardPage;
 import ObjectRepository.LoginPage;
-
-
-
 
 
 public class BaseClass {
 
 	public static WebDriver driver;
-//	public Driverutility driverUtility;
-//	public FileUtility fileUtility;
 	public LoginPage loginpage;
-//	public DashBoardPage dashboardPage;
-//	public StageGatePage stageGatePage ;
-//	public AddBriefPage addBriefPage;
-//	public AddBrief_ProductDetailPage addBrief_ProductDetailPage;
-//	public CancelPage cancelPage;
-//	public CommercialsPage commercialsPage;
-//	public MileStonePage mileStonePage;
-//	public OperationsPage operationsPage;
-//	public FormReviewPage formReviewPage;
-//	public FinanceLeadRequestPage financeLeadRequestPage;
-//	public AddLineTrailPage addLineTrailPage;
-//	public ConsumerResearchPage  consumerResearchPage;
+	public DashBoardPage dashboardPage;
 	
 	@BeforeClass
 	public void Login() {
-		 driver=new ChromeDriver();
+		 String downloadFilepath1 = System.getProperty("user.dir") + "\\Reports";
+
+	        Map<String, Object> prefs = new HashMap<>();
+	        prefs.put("download.default_directory", downloadFilepath1);
+	        prefs.put("download.prompt_for_download", false);
+	        prefs.put("download.directory_upgrade", true);
+	        prefs.put("safebrowsing.enabled", true);
+	        
+	       
+			ChromeOptions options = new ChromeOptions();
+			options.setExperimentalOption("prefs", prefs);
+			 
+			  driver = new ChromeDriver(options);
 		
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		
-		driver.get("https://gtfl-npd-webapp.azurewebsites.net/");
+		driver.get("https://gavl.uniqid.io");
 		
-//		driverUtility              =new Driverutility(driver);
-//		fileUtility                = new FileUtility();
 		loginpage                  =new LoginPage(driver);
-//		dashboardPage              = new DashBoardPage(driver);
-//		stageGatePage              = new StageGatePage(driver);
-//		addBriefPage               = new AddBriefPage(driver);
-//		addBrief_ProductDetailPage = new AddBrief_ProductDetailPage(driver);
-//		cancelPage                 = new CancelPage(driver);
-//		commercialsPage            = new CommercialsPage(driver);
-//		mileStonePage              = new MileStonePage(driver);
-//		operationsPage             = new OperationsPage(driver);
-//		formReviewPage             = new FormReviewPage(driver);
-//		financeLeadRequestPage     = new FinanceLeadRequestPage(driver);
-//		addLineTrailPage           = new AddLineTrailPage(driver);
-//		consumerResearchPage       = new ConsumerResearchPage(driver);
+		dashboardPage              = new DashBoardPage(driver);
+	}
+	
+	@AfterClass
+	public void closeInstance() {
+		driver.quit();
+		System.out.println("File has been downloaded inside the project");
 	}
 	
 }

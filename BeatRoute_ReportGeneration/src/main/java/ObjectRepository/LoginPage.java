@@ -1,6 +1,7 @@
 package ObjectRepository;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.openqa.selenium.By;
@@ -19,16 +20,16 @@ public class LoginPage extends BaseClass{
 		PageFactory.initElements(driver, this);
 	}
 	
-	@FindBy(xpath = "//input[@placeholder='Please enter your email']")
+	@FindBy(id = "Username")
 	private WebElement username;
 	
 	@FindBy(xpath = "//input[@value='PROCEED']")
 	private WebElement proceedButton;
 	
-	@FindBy(xpath = "//input[@placeholder='Enter your password']")
+	@FindBy(id = "Password")
 	private WebElement passwordTextField;
 	
-	@FindBy(xpath = "//input[@value='Log In']")
+	@FindBy(xpath = "//button[@type='submit']")
 	private WebElement logInButton;
 	
 	@FindBy(xpath = "//body[1]/div[5]/div[1]/div[2]/div[2]/div[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[1]/div[2]/ul[1]/li[2]/div[1]/div[1]/i[1]")
@@ -39,6 +40,44 @@ public class LoginPage extends BaseClass{
 	
 	@FindBy(xpath = "//a[@href='/download/CSV/getLast/type/activity']")
 	private WebElement downloadButton;
+	
+	@FindBy(xpath = "//mat-icon[text()='logout']")
+	private WebElement logoutButton;
+	
+	
+	
+	LocalDate today = LocalDate.now();
+	
+    LocalDate yesterday = today.minusDays(1);
+    
+    LocalDate firstDayOfMonth = today.withDayOfMonth(1);
+    int day=yesterday.getDayOfMonth();
+    
+    public void clickOnFromDate() throws InterruptedException {
+    	 if (today.isEqual(firstDayOfMonth)) {
+             // Click the "previous month" button
+             WebElement previousMonthBtn = driver.findElement(By.xpath(
+                 "//button[@class='mat-calendar-previous-button mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base']"
+             ));
+             previousMonthBtn.click();
+
+             // Small wait to allow calendar to load previous month
+             Thread.sleep(1000);
+
+             // Re-locate yesterday’s day in the *previous month’s calendar*
+             
+             WebElement yesterdays = driver.findElement(By.xpath("//div[text()=' " + day + " ']"));
+             yesterdays.click();
+
+         } else {
+             // Same month → just click yesterday’s date
+            
+             WebElement yesterdays = driver.findElement(By.xpath("//div[text()=' " + day + " ']"));
+             yesterdays.click();
+         }
+    }
+	
+	
 	
 	Date date = new Date();
 	public void clikOnDateChange() {
@@ -76,6 +115,51 @@ public class LoginPage extends BaseClass{
 	        reportDate1.click();
 		}catch (Exception e) {
 			System.out.println("Not able to click on reportDate " + e);
+		}
+	}
+	
+	public void SendkeyToUserName(String key) {
+		try {
+			username.sendKeys(key);
+			System.out.println("Entered value in username");
+		}catch (Exception e) {
+			System.out.println("Not able to enter value in username " + e);
+		}
+	}
+	
+	public void clickOnProceedButton() {
+		try {
+			proceedButton.click();
+			System.out.println("Clicked on Proceed Button");
+		}catch (Exception e) {
+			System.out.println("Not able to click on Proceed Button "+ e);
+		}
+	}
+	
+	public void sendkeyToPasswordTextField(String key) {
+		try {
+			passwordTextField.sendKeys(key);
+			System.out.println("Entered value in Password TextField");
+		}catch (Exception e) {
+			System.out.println("Not able to enter value in Password TextField " + e);
+		}
+	}
+	
+	public void clickOnLogInButton() {
+		try {
+			logInButton.click();
+			System.out.println("Clicked on logIn Button");
+		}catch (Exception e) {
+			System.out.println("Not able to click on logIn Button " + e);
+		}
+	}
+	
+	public void clickOnLogoutButton() {
+		try {
+			logoutButton.click();
+			System.out.println("Clicked on logoutButton");
+		}catch (Exception e) {
+			System.out.println("Not able to click on logoutButton "+ e);
 		}
 	}
 

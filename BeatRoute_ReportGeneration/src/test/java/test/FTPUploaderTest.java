@@ -9,13 +9,17 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.testng.annotations.Test;
 
+/**
+ *@author DivyaPrakashAmar
+ */
 public class FTPUploaderTest {
 	
     @Test
     public void upload(){
         // Local folder where reports are stored
-//    	String today = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
     	String localFolder = "C:\\Users\\testing.engineer\\git\\Reporting\\BeatRoute_ReportGeneration\\Reports" ;
+    	
         // Get all files starting with "Liquidation_Log" and ending with ".xlsx"
         File folder = new File(localFolder);
         File[] files = folder.listFiles((dir, name) -> name.startsWith("Liquidation_Log") && name.endsWith(".xlsx"));
@@ -30,11 +34,13 @@ public class FTPUploaderTest {
         File reportFile = files[0];  // Latest file
         String localFilePath = reportFile.getAbsolutePath();
         String remoteFilePath = "/Powerbi_Analytics/MD_Dashboards/CPB/" + reportFile.getName();
+        String userId ="powerbi.admin";
+        String password ="Pbianalyts@456#";
 
         FTPClient ftpClient = new FTPClient();
         try {
             ftpClient.connect("10.9.111.212");
-            boolean login = ftpClient.login("powerbi.admin", "Pbianalyts@456#");
+            boolean login = ftpClient.login(userId, password);
 
             if (login) {
                 System.out.println("Connected to FTP server");
