@@ -55,5 +55,3 @@ jobs:
       - name: List Reports folder
         run: |
           ls -R BeatRoute_ReportGeneration/Reports
-ation/Reports /remote/Reports
-          "
