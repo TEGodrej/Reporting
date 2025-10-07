@@ -39,11 +39,17 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
 
-      # 4️⃣ Install ChromeDriver
+     # 4️⃣ Install ChromeDriver manually
       - name: Install ChromeDriver
-        uses: nanasess/setup-chromedriver@v1
-        with:
-          chrome-version: latest
+        run: |
+         CHROME_VERSION=$(google-chrome --version | awk '{print $3}')
+         CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
+         wget -N https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip -P ~/
+         unzip ~/chromedriver_linux64.zip -d ~/
+         sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
+         sudo chmod +x /usr/local/bin/chromedriver
+         chromedriver --version
+
 
       # 5️⃣ Verify environment
       - name: Verify Java, Maven, Chrome
