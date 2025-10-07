@@ -53,6 +53,4 @@ jobs:
 
       # Optional: List downloaded reports
       - name: List Reports folder
-        run: |
-          ls -R BeatRoute_ReportGeneration/Reports
-
+        run: ls -R BeatRoute_ReportGeneration/Reports
